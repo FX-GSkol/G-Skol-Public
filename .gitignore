@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+# Packaging
+build/
+dist/
+*.spec.bak
+RESULTAT-BUILD-G-SKOL.txt
+# User data / local workspaces
+Workspace/
+*.coldb
+*.coldb-*
+*.sqlite
+*.sqlite3
+# Diagnostic output
+Diagnostics/
+*.log
+ERREURS-G-SKOL.txt
+DIAGNOSTIC-*.txt
+# Local editor / OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store

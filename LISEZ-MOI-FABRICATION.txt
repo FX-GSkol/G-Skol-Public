@@ -1,0 +1,33 @@
+G-SKOL - FABRICATION POUR TEST SUR UN AUTRE PC
+
+Le dossier Workspace se trouve a cote du dossier Core pour la version lancee
+par run.bat. Il n'est pas inclus dans les builds. Conservez-le et sauvegardez-le.
+
+1. Version portable
+   Double-cliquez sur CREER-G-SKOL-PORTABLE.bat.
+   Le resultat est Core\dist\G-Skol-Portable.zip.
+   Sur l'autre PC, extrayez le ZIP complet, puis lancez G-Skol.exe.
+   Les quatre dossiers de Workspace\Bibliothèques sont inclus.
+   Les autres dossiers du Workspace sont crees au premier lancement.
+
+2. Installateur Windows
+   Installez Inno Setup depuis https://jrsoftware.org/isdl.php
+   Apres l'etape 1, double-cliquez sur CREER-G-SKOL-INSTALLATEUR.bat.
+   Le resultat est Core\dist\G-Skol-Installation.exe.
+   L'installation est propre a votre compte Windows et ne demande pas
+   de droits administrateur. Elle cree des raccourcis et installe les
+   quatre dossiers de la bibliotheque sans remplacer les modeles deja presents.
+
+Les fichiers .coldb personnels ne sont copies dans aucun des deux paquets.
+Le build copie exactement Workspace\Bibliothèques situe a cote du Core,
+y compris vos modeles personnels et les quatre dossiers de la capture.
+Nettoyez son contenu avant toute distribution publique.
+Les dix modèles de fiches d'exemple sont fournis avec les deux paquets et
+ajoutés dans Workspace\Bibliothèques au premier lancement, sans remplacer
+les modèles personnels déjà présents.
+Pour tester, utilisez « Parcourir » dans G-Skol ou copiez une collection
+de test dans le dossier Workspace\Collections de la version testee.
+
+En cas d'erreur de fabrication portable, envoyez RESULTAT-BUILD-G-SKOL.txt.
+La fabrication de l'installateur necessite Windows et Inno Setup ; aucun
+installateur n'est cree par le seul ZIP du Core.

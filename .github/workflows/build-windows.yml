@@ -1,0 +1,82 @@
+name: Build G-Skol Windows (unsigned)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-windows:
+    runs-on: windows-2022
+    timeout-minutes: 60
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11 x64
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          architecture: x64
+
+      - name: Install Python dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt 'pyinstaller>=6,<7'
+          python -m compileall -q app.py core ui
+
+      - name: Build portable executable
+        shell: pwsh
+        run: |
+          python -m PyInstaller --noconfirm --clean --onedir --windowed --noupx --name G-Skol --icon assets/G-Skol.ico --add-data 'assets/G-Skol.ico;assets' --add-data 'ui/access_data_bridge.vbs;ui' --add-data 'ui/access_forms_structure_bridge.vbs;ui' --add-data 'ui/access_structure_bridge.vbs;ui' --add-data 'ModelesOfficiels;ModelesOfficiels' app.py
+          if (!(Test-Path 'dist/G-Skol/G-Skol.exe')) { throw 'G-Skol.exe absent' }
+          Move-Item 'dist/G-Skol' 'dist/G-Skol-Portable'
+          New-Item -ItemType File 'dist/G-Skol-Portable/G-Skol.portable' | Out-Null
+          @'
+          G-SKOL - VERSION PORTABLE (NON SIGNEE)
+          Extraire le dossier complet et lancer G-Skol.exe.
+          Conserver le dossier _internal avec le programme.
+          Aucune collection personnelle n'est incluse.
+          '@ | Set-Content -Encoding UTF8 'dist/G-Skol-Portable/LISEZ-MOI.txt'
+          # Include project licensing and data attribution in both distributions.
+          # G-Skol.iss packages this portable directory into the Windows installer.
+          $notices = @('LICENSE', 'LICENCES-TIERS.md', 'SOURCES-DONNEES.md')
+          foreach ($notice in $notices) {
+            if (!(Test-Path -LiteralPath $notice -PathType Leaf)) { throw "Document obligatoire absent : $notice" }
+            Copy-Item -LiteralPath $notice -Destination 'dist/G-Skol-Portable/' -ErrorAction Stop
+          }
+          foreach ($notice in $notices) {
+            if (!(Test-Path -LiteralPath "dist/G-Skol-Portable/$notice" -PathType Leaf)) { throw "Document non copie : $notice" }
+          }
+          Compress-Archive -Path 'dist/G-Skol-Portable' -DestinationPath 'dist/G-Skol-Portable.zip'
+
+      - name: Install Inno Setup
+        shell: pwsh
+        run: choco install innosetup --yes --no-progress
+
+      - name: Build installer
+        shell: pwsh
+        run: |
+          $iscc = Get-ChildItem 'C:\Program Files (x86)\Inno Setup *\ISCC.exe', 'C:\Program Files\Inno Setup *\ISCC.exe' -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty FullName
+          if (!$iscc) { throw 'Inno Setup ISCC.exe introuvable' }
+          & $iscc 'G-Skol.iss'
+          if ($LASTEXITCODE -ne 0) { throw "Inno Setup a échoué : $LASTEXITCODE" }
+          if (!(Test-Path 'dist/G-Skol-Installation.exe')) { throw 'Installateur absent' }
+
+      - name: Upload unsigned portable ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: G-Skol-Portable-Windows-unsigned
+          path: dist/G-Skol-Portable.zip
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Upload unsigned installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: G-Skol-Installation-Windows-unsigned
+          path: dist/G-Skol-Installation.exe
+          if-no-files-found: error
+          retention-days: 7

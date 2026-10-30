@@ -1,0 +1,3 @@
+Version source : fabriquer le portable puis l’installateur sous Windows.
+Installer dans Program Files ; Workspace dans C:\G-Skol-Workspace.
+Ne pas écraser le Workspace existant.

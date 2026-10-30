@@ -1,0 +1,1 @@
+APP_CONFIG={"language":"fr","theme":"system"}
