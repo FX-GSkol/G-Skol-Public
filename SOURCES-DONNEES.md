@@ -1,6 +1,7 @@
 # G-Skol 6.1 — Sources et conditions de réutilisation des données
 
 Ce document décrit la provenance des données livrées avec certains modèles officiels de G-Skol. Il distingue les données documentaires du code du logiciel.
+Important — Version publique G-Skol 6.1 : le modèle officiel Minéraux distribué dans le dépôt public et les exécutables ne contient pas le référentiel scientifique initial issu de l'IMA, ni les enrichissements de fluorescence ou les liens Mindat associés. Ces données ont été retirées par précaution, dans l'attente d'une clarification de leurs droits de redistribution. Le modèle Minéraux reste disponible pour permettre aux utilisateurs de créer et renseigner leurs propres collections. Les sections suivantes documentent la provenance historique des données conservées uniquement dans la version personnelle de l'auteur.
 
 ## 1. Logiciel et données : deux périmètres distincts
 
