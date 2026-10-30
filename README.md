@@ -64,9 +64,7 @@ Les exécutables ne disposent pas encore d'une signature numérique. Une demande
 
 ## Modèles officiels
 
-Le dossier `ModelesOfficiels` contient les modèles fournis avec G-Skol.
-
-Le modèle Minéraux comprend notamment un référentiel minéralogique constitué et enrichi par FX à partir de sources documentaires, dont les informations publiées par l'IMA.
+Le modèle officiel Minéraux est fourni sans le référentiel scientifique initial issu de l'IMA ni les enrichissements provenant de sources tierces, retirés par précaution concernant leurs droits de redistribution. Les utilisateurs peuvent renseigner leurs propres données minéralogiques. Les précisions figurent dans le document SOURCES-DONNEES.md.
 
 ## Licence et contributions
 
